@@ -9,3 +9,14 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Food {
+  id          Int    @id @default(autoincrement())
+  name        String @db.VarChar(255)
+  imgSrc      String
+  stock       Int    @default(0)
+  description String @db.Text
+  category    String @db.VarChar(255)
+  brand       String @db.VarChar(255)
+  origin      String @db.VarChar(255)
+}
