@@ -16,7 +16,7 @@ const FoodsPage = () => {
 
   return (
     <Container mt="5" mx="5">
-      <Grid gap="5" columns="5">
+      <Grid gap="5" columns={{ initial: "2", sm: "3", md: "4", lg: "5" }}>
         {foods.map((food) => (
           <FoodCard key={food.id} name={food.name} src={food.src} />
         ))}

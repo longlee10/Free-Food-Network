@@ -12,7 +12,9 @@ const FoodCard = ({ src, name }: Food) => {
       <Flex direction="column" justify="start" align="center">
         <Image src={src} alt="food image" width="200" height="20" />
         <Text>{name}</Text>
-        <Button mt="2">Add To Cart</Button>
+        <Button mt="2" size={{ initial: "3", sm: "3" }}>
+          <Text size={{ initial: "1", sm: "3" }}> Add To Cart</Text>
+        </Button>
       </Flex>
     </Card>
   );
