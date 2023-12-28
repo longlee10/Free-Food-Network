@@ -1,6 +1,5 @@
 import { Container, Flex } from "@radix-ui/themes";
 import Link from "next/link";
-import React from "react";
 import { MdFoodBank } from "react-icons/md";
 
 const NavBar = () => {
