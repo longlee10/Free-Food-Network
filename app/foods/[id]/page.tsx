@@ -1,6 +1,15 @@
 import prisma from "@/prisma/client";
-import { Box, Text, Flex, Grid, Strong, Heading } from "@radix-ui/themes";
+import {
+  Box,
+  Text,
+  Flex,
+  Grid,
+  Strong,
+  Heading,
+  Button,
+} from "@radix-ui/themes";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
   params: { id: string };
@@ -44,6 +53,9 @@ const FoodDetailsPage = async ({ params: { id } }: Props) => {
               {detail.text}
             </Text>
           ))}
+          <Button className="w-32" mt="3">
+            <Link href={`/foods/${id}/edit`}>Edit Food</Link>
+          </Button>
         </Flex>
       </Grid>
     </Box>

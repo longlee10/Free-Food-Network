@@ -1,4 +1,3 @@
-"use client";
 import { Heading } from "@radix-ui/themes";
 import FoodForm from "../_components/FoodForm";
 
