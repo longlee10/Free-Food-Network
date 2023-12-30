@@ -10,6 +10,7 @@ import {
 } from "@radix-ui/themes";
 import Image from "next/image";
 import Link from "next/link";
+import { DeleteFoodButton } from "./DeleteFoodButton";
 
 interface Props {
   params: { id: string };
@@ -56,6 +57,7 @@ const FoodDetailsPage = async ({ params: { id } }: Props) => {
           <Button className="w-32" mt="3">
             <Link href={`/foods/${id}/edit`}>Edit Food</Link>
           </Button>
+          <DeleteFoodButton id={id} />
         </Flex>
       </Grid>
     </Box>
