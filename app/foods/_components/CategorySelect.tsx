@@ -19,8 +19,8 @@ const CategorySelect = () => {
       onValueChange={(category) => {
         const params = new URLSearchParams(searchParams);
         params.set("category", category);
-        const query = params.size ? `?${params.toString()}` : "";
-        router.push(`/foods/${query}`);
+        if (!category) params.delete("category");
+        router.push(`/foods/?${params.toString()}`);
       }}
     >
       <Select.Trigger />
