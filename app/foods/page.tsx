@@ -3,8 +3,8 @@ import { Button, Flex, Grid } from "@radix-ui/themes";
 import Link from "next/link";
 import Pagination from "../components/Pagination";
 import FoodCard from "./FoodCard";
-import CategorySelect from "./_components/CategorySelect";
-import PageSizeSelect from "./_components/PageSizeSelect";
+import dynamic from "next/dynamic";
+import Skeleton from "../components/Skeleton";
 
 interface FoodQuery {
   category: string;
@@ -15,6 +15,16 @@ interface FoodQuery {
 interface Props {
   searchParams: FoodQuery;
 }
+
+const CategorySelect = dynamic(() => import("./_components/CategorySelect"), {
+  ssr: false,
+  loading: () => <Skeleton width={150} height={28} />,
+});
+
+const PageSizeSelect = dynamic(() => import("./_components/PageSizeSelect"), {
+  ssr: false,
+  loading: () => <Skeleton width={120} height={28} />,
+});
 
 const FoodsPage = async ({ searchParams }: Props) => {
   const category = searchParams.category || undefined;
