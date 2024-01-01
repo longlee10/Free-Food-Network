@@ -4,16 +4,23 @@ import Link from "next/link";
 import Pagination from "../components/Pagination";
 import FoodCard from "./FoodCard";
 import CategorySelect from "./_components/CategorySelect";
+import PageSizeSelect from "./_components/PageSizeSelect";
+
+interface FoodQuery {
+  category: string;
+  page: string;
+  pageSize: string;
+}
 
 interface Props {
-  searchParams: { category: string; page: string };
+  searchParams: FoodQuery;
 }
 
 const FoodsPage = async ({ searchParams }: Props) => {
-  const category = searchParams.category ? searchParams.category : undefined;
+  const category = searchParams.category || undefined;
   const where = { category: category };
   const page = parseInt(searchParams.page) || 1;
-  const pageSize = 5;
+  const pageSize = parseInt(searchParams.pageSize) || 10;
   const foods = await prisma.food.findMany({
     where,
     skip: (page - 1) * pageSize,
@@ -25,7 +32,10 @@ const FoodsPage = async ({ searchParams }: Props) => {
   return (
     <>
       <Flex mb="3" justify="between">
-        <CategorySelect />
+        <Flex gap="3">
+          <CategorySelect />
+          <PageSizeSelect />
+        </Flex>
         <Button>
           <Link href="/foods/new">Add New Food</Link>
         </Button>
