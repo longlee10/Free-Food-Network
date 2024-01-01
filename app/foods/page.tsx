@@ -1,16 +1,26 @@
-import { Button, Flex, Grid } from "@radix-ui/themes";
-import FoodCard from "./FoodCard";
 import prisma from "@/prisma/client";
+import { Button, Flex, Grid } from "@radix-ui/themes";
 import Link from "next/link";
+import Pagination from "../components/Pagination";
+import FoodCard from "./FoodCard";
 import CategorySelect from "./_components/CategorySelect";
 
 interface Props {
-  searchParams: { category: string };
+  searchParams: { category: string; page: string };
 }
 
 const FoodsPage = async ({ searchParams }: Props) => {
   const category = searchParams.category ? searchParams.category : undefined;
-  const foods = await prisma.food.findMany({ where: { category: category } });
+  const where = { category: category };
+  const page = parseInt(searchParams.page) || 1;
+  const pageSize = 5;
+  const foods = await prisma.food.findMany({
+    where,
+    skip: (page - 1) * pageSize,
+    take: pageSize,
+  });
+
+  const foodCount = await prisma.food.count({ where });
 
   return (
     <>
@@ -25,6 +35,11 @@ const FoodsPage = async ({ searchParams }: Props) => {
           <FoodCard food={food} key={food.id} />
         ))}
       </Grid>
+      <Pagination
+        itemCount={foodCount}
+        pageSize={pageSize}
+        currentPage={page}
+      />
     </>
   );
 };
