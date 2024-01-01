@@ -1,17 +1,18 @@
 "use client";
 
 import { Select } from "@radix-ui/themes";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const PageSizeSelect = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   return (
     <Select.Root
       defaultValue="10"
       onValueChange={(pageSize) => {
-        const params = new URLSearchParams();
-        params.append("pageSize", pageSize);
+        const params = new URLSearchParams(searchParams);
+        params.set("pageSize", pageSize);
         const query = params.size ? `?${params.toString()}` : "";
         router.push(`/foods/${query}`);
       }}

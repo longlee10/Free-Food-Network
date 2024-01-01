@@ -17,8 +17,8 @@ const CategorySelect = () => {
     <Select.Root
       defaultValue=""
       onValueChange={(category) => {
-        const params = new URLSearchParams();
-        params.append("category", category);
+        const params = new URLSearchParams(searchParams);
+        params.set("category", category);
         const query = params.size ? `?${params.toString()}` : "";
         router.push(`/foods/${query}`);
       }}
