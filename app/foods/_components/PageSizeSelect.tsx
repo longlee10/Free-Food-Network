@@ -13,8 +13,7 @@ const PageSizeSelect = () => {
       onValueChange={(pageSize) => {
         const params = new URLSearchParams(searchParams);
         params.set("pageSize", pageSize);
-        const query = params.size ? `?${params.toString()}` : "";
-        router.push(`/foods/${query}`);
+        router.push(`/foods/?${params.toString()}`);
       }}
     >
       <Select.Trigger />

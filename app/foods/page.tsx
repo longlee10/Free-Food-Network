@@ -1,8 +1,8 @@
 import prisma from "@/prisma/client";
-import { Box, Grid } from "@radix-ui/themes";
+import { Box } from "@radix-ui/themes";
 import Pagination from "../components/Pagination";
-import FoodCard from "./FoodCard";
 import FoodAction from "./FoodAction";
+import FoodGrid from "./FoodGrid";
 
 interface FoodQuery {
   category: string;
@@ -30,11 +30,7 @@ const FoodsPage = async ({ searchParams }: Props) => {
   return (
     <Box>
       <FoodAction />
-      <Grid gap="5" columns={{ initial: "2", sm: "3", md: "4", lg: "5" }}>
-        {foods.map((food) => (
-          <FoodCard food={food} key={food.id} />
-        ))}
-      </Grid>
+      <FoodGrid foods={foods} />
       <Pagination
         itemCount={foodCount}
         pageSize={pageSize}
