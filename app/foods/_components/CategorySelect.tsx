@@ -4,18 +4,18 @@ import { useSearchParams, useRouter } from "next/navigation";
 
 const CategorySelect = () => {
   const categories = [
-    { value: "protein", label: "Protein" },
-    { value: "vegetables", label: "Vegetables" },
-    { value: "fruits", label: "Fruits" },
-    { value: "carb", label: "Carb" },
-    { value: "dairy", label: "Dairy" },
+    { value: "Protein", label: "Protein" },
+    { value: "Vegetables", label: "Vegetables" },
+    { value: "Fruits", label: "Fruits" },
+    { value: "Carb", label: "Carb" },
+    { value: "Dairy", label: "Dairy" },
   ];
   const searchParams = useSearchParams();
   const router = useRouter();
 
   return (
     <Select.Root
-      defaultValue=""
+      defaultValue={searchParams.get("category") || ""}
       onValueChange={(category) => {
         const params = new URLSearchParams(searchParams);
         params.set("category", category);
