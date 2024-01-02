@@ -15,14 +15,12 @@ const PageSizeSelect = dynamic(() => import("./_components/PageSizeSelect"), {
 
 const FoodAction = () => {
   return (
-    <Flex mb="3" justify="between">
-      <Flex gap="3">
-        <CategorySelect />
-        <PageSizeSelect />
-      </Flex>
+    <Flex mb="3" gap="4">
       <Button>
         <Link href="/foods/new">Add New Food</Link>
       </Button>
+      <CategorySelect />
+      <PageSizeSelect />
     </Flex>
   );
 };
