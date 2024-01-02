@@ -19,6 +19,7 @@ const FoodsPage = async ({ searchParams }: Props) => {
   const where = { category: category };
   const page = parseInt(searchParams.page) || 1;
   const pageSize = parseInt(searchParams.pageSize) || 10;
+
   const foods = await prisma.food.findMany({
     where,
     skip: (page - 1) * pageSize,

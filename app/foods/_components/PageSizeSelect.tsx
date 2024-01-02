@@ -13,6 +13,7 @@ const PageSizeSelect = () => {
       onValueChange={(pageSize) => {
         const params = new URLSearchParams(searchParams);
         params.set("pageSize", pageSize);
+        params.delete("page");
         router.push(`/foods/?${params.toString()}`);
       }}
     >

@@ -20,6 +20,7 @@ const CategorySelect = () => {
         const params = new URLSearchParams(searchParams);
         params.set("category", category);
         if (!category) params.delete("category");
+        params.delete("page");
         router.push(`/foods/?${params.toString()}`);
       }}
     >
