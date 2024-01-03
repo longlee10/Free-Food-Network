@@ -9,7 +9,7 @@ const PageSizeSelect = () => {
 
   return (
     <Select.Root
-      defaultValue="10"
+      defaultValue={searchParams.get("pageSize") || "10"}
       onValueChange={(pageSize) => {
         const params = new URLSearchParams(searchParams);
         params.set("pageSize", pageSize);
