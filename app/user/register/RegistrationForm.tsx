@@ -39,7 +39,7 @@ const RegistrationForm = () => {
           try {
             setSubmit(true);
             await axios.post("/api/user/register", data);
-            router.push("/");
+            router.push("/api/auth/signin"); // sign user in automatically after registration.
             router.refresh();
           } catch (err) {
             setSubmit(false);
