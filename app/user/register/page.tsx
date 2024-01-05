@@ -1,12 +1,7 @@
-import { Box } from "@radix-ui/themes";
 import RegistrationForm from "./RegistrationForm";
 
-const RegistrationPage = () => {
-  return (
-    <Box>
-      <RegistrationForm />
-    </Box>
-  );
+const RegistrationPage = async () => {
+  return <RegistrationForm />;
 };
 
 export default RegistrationPage;
