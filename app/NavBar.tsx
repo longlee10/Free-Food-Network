@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { MdFoodBank } from "react-icons/md";
 import { authOptions } from "./api/auth/authOptions";
+import prisma from "@/prisma/client";
 
 const NavBar = async () => {
   const session = await getServerSession(authOptions);

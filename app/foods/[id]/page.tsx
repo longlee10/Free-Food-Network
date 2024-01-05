@@ -11,6 +11,8 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { DeleteFoodButton } from "./DeleteFoodButton";
+import { authOptions } from "@/app/api/auth/authOptions";
+import { getServerSession } from "next-auth";
 
 interface Props {
   params: { id: string };
@@ -20,6 +22,12 @@ const FoodDetailsPage = async ({ params: { id } }: Props) => {
   const food = await prisma.food.findUnique({
     where: { id: parseInt(id) },
   });
+  const session = await getServerSession(authOptions);
+  const user = session
+    ? await prisma.user.findUnique({
+        where: { email: session.user?.email! },
+      })
+    : null;
 
   const details = [
     { label: "Description: ", text: food?.description },
@@ -54,10 +62,14 @@ const FoodDetailsPage = async ({ params: { id } }: Props) => {
               {detail.text}
             </Text>
           ))}
-          <Button className="w-32" mt="3">
-            <Link href={`/foods/${id}/edit`}>Edit Food</Link>
-          </Button>
-          <DeleteFoodButton id={id} />
+          {user?.isAdmin && (
+            <Flex direction="column">
+              <Button className="w-32" mt="3">
+                <Link href={`/foods/${id}/edit`}>Edit Food</Link>
+              </Button>
+              <DeleteFoodButton id={id} />
+            </Flex>
+          )}
         </Flex>
       </Grid>
     </Box>
