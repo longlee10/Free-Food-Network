@@ -1,8 +1,12 @@
-import { Container, Flex } from "@radix-ui/themes";
+import { Container, Flex, Text } from "@radix-ui/themes";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { MdFoodBank } from "react-icons/md";
+import { authOptions } from "./api/auth/authOptions";
 
-const NavBar = () => {
+const NavBar = async () => {
+  const session = await getServerSession(authOptions);
+
   return (
     <nav className="border-b mb-3 px-3 py-3">
       <Container>
@@ -14,11 +18,19 @@ const NavBar = () => {
             <Link href="/">Free Food Network</Link>
             <Link href="/foods">Foods</Link>
           </Flex>
-          <Flex gap="5">
-            <Link href="/api/auth/signin">Sign In</Link>
-            <Link href="/user/register">Sign Up</Link>
-            <Link href="/api/auth/signout">Sign Out</Link>
-          </Flex>
+          {!session?.user && (
+            <Flex gap="5">
+              <Link href="/api/auth/signin">Sign In</Link>
+              <Link href="/user/register">Sign Up</Link>
+            </Flex>
+          )}
+
+          {session?.user && (
+            <Flex gap="5">
+              <Link href="/api/auth/signout">Sign Out</Link>
+              <Text>{session.user!.name}</Text>
+            </Flex>
+          )}
         </Flex>
       </Container>
     </nav>
