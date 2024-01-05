@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Spinner from "./Spinner";
+import Spinner from "../../components/Spinner";
 import ErrorMessage from "./ErrorMessage";
 
 type FoodFormData = z.infer<typeof foodSchema>;
