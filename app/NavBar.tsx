@@ -17,6 +17,7 @@ const NavBar = () => {
           <Flex gap="5">
             <Link href="/api/auth/signin">Sign In</Link>
             <Link href="/user/register">Sign Up</Link>
+            <Link href="/api/auth/signout">Sign Out</Link>
           </Flex>
         </Flex>
       </Container>
