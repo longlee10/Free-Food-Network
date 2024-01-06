@@ -1,9 +1,8 @@
-import { Container, Flex, Text } from "@radix-ui/themes";
+import { Container, Flex } from "@radix-ui/themes";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { MdFoodBank } from "react-icons/md";
 import { authOptions } from "./api/auth/authOptions";
-import prisma from "@/prisma/client";
 
 const NavBar = async () => {
   const session = await getServerSession(authOptions);
@@ -29,7 +28,7 @@ const NavBar = async () => {
           {session?.user && (
             <Flex gap="5">
               <Link href="/api/auth/signout">Sign Out</Link>
-              <Text>{session.user!.name}</Text>
+              <Link href="/user/update-password">{session.user!.name}</Link>
             </Flex>
           )}
         </Flex>
