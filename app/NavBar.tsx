@@ -28,7 +28,7 @@ const NavBar = async () => {
           {session?.user && (
             <Flex gap="5">
               <Link href="/api/auth/signout">Sign Out</Link>
-              <Link href="/user/update-password">{session.user!.name}</Link>
+              <Link href="/user/profile">{session.user!.name}</Link>
             </Flex>
           )}
         </Flex>
