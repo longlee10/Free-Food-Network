@@ -1,8 +1,7 @@
 import { authOptions } from "@/app/api/auth/authOptions";
-import { Box, Text, Flex, Button } from "@radix-ui/themes";
-import { getServerSession } from "next-auth";
 import prisma from "@/prisma/client";
-import UserUpdateForm from "../update/UserUpdateForm";
+import { Box, Text } from "@radix-ui/themes";
+import { getServerSession } from "next-auth";
 import UpdateButton from "./UpdateButton";
 
 const UserProfilePage = async () => {
@@ -18,14 +17,18 @@ const UserProfilePage = async () => {
         Profile Settings
       </Text>
 
-      <UpdateButton href="/user/update/email" label="Update Email" />
-      <UpdateButton href="/user/update/username" label="Update Username" />
-      <UpdateButton href="/user/update/password" label="Update Password" />
       <UpdateButton
-        href="/user/update/delete"
-        type="delete"
-        label="Delete Profile"
+        data={user.email!}
+        href="/user/update/email"
+        label="Email"
       />
+      <UpdateButton
+        data={user.name!}
+        href="/user/update/username"
+        label="Username"
+      />
+      <UpdateButton href="/user/update/password" label="Password" />
+      <UpdateButton href="/user/update/delete" type="delete" label="Profile" />
     </Box>
   );
 };
