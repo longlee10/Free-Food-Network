@@ -3,6 +3,7 @@ import { Box, Text, Flex, Button } from "@radix-ui/themes";
 import { getServerSession } from "next-auth";
 import prisma from "@/prisma/client";
 import UserUpdateForm from "./UserUpdateForm";
+import UpdateButton from "./UpdateButton";
 
 const UserProfilePage = async () => {
   const session = await getServerSession(authOptions);
@@ -17,18 +18,14 @@ const UserProfilePage = async () => {
         Profile Settings
       </Text>
 
-      <UserUpdateForm user={user} type="Username" />
-      <UserUpdateForm user={user} type="Email" />
-
-      <Text className="font-bold text-sm block" mb="1" mt="3">
-        Change Password
-      </Text>
-      <Button>Change Password</Button>
-
-      <Text color="red" className="font-bold text-sm block" mb="1" mt="3">
-        Delete Profile
-      </Text>
-      <Button color="red">Delete Profile</Button>
+      <UpdateButton href="/user/update/email" label="Update Email" />
+      <UpdateButton href="/user/update/username" label="Update Username" />
+      <UpdateButton href="/user/update/password" label="Update Password" />
+      <UpdateButton
+        href="/user/update/delete"
+        type="delete"
+        label="Delete Profile"
+      />
     </Box>
   );
 };

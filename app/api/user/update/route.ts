@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
 
   const updatedUser = await prisma.user.update({
     where: { email: body.email },
-    data: { password: hashedPw },
+    data: { email: body.newEmail, name: body.name, password: hashedPw },
   });
 
   return NextResponse.json(updatedUser, { status: 200 });
