@@ -2,7 +2,7 @@ import { authOptions } from "@/app/api/auth/authOptions";
 import { Box, Text, Flex, Button } from "@radix-ui/themes";
 import { getServerSession } from "next-auth";
 import prisma from "@/prisma/client";
-import UserUpdateForm from "./UserUpdateForm";
+import UserUpdateForm from "../update/UserUpdateForm";
 import UpdateButton from "./UpdateButton";
 
 const UserProfilePage = async () => {

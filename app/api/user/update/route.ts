@@ -17,11 +17,18 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json("User not found", { status: 404 });
 
   // update password
-  const hashedPw = await bcrypt.hash(body.password, 10);
+  if (body.password) {
+    const hashedPw = await bcrypt.hash(body.password, 10);
+    const updatedUser = await prisma.user.update({
+      where: { email: body.email },
+      data: { password: hashedPw },
+    });
+    return NextResponse.json(updatedUser, { status: 200 });
+  }
 
   const updatedUser = await prisma.user.update({
     where: { email: body.email },
-    data: { email: body.newEmail, name: body.name, password: hashedPw },
+    data: { name: body.newName, email: body.newEmail },
   });
 
   return NextResponse.json(updatedUser, { status: 200 });

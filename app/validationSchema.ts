@@ -27,6 +27,7 @@ export const userRegistrationSchema = z.object({
 
 export const userUpdateSchema = z.object({
   name: z.string().min(3).optional(),
+  newName: z.string().min(3).optional(),
   email: z.string().email().optional(),
   newEmail: z.string().email().optional(),
   password: z.string().min(8).optional(),
