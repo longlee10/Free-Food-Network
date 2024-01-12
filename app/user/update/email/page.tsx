@@ -9,7 +9,7 @@ const UpdateEmailPage = async () => {
     where: { email: session?.user?.email! },
   });
 
-  if (!user) return <p></p>;
+  if (!user) return null;
 
   return <UserUpdateForm type="Email" user={user!} />;
 };

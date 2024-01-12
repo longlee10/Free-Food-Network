@@ -17,18 +17,25 @@ const UserProfilePage = async () => {
         Profile Settings
       </Text>
 
-      <UpdateButton
+      {/* <UpdateButton
         data={user.email!}
         href="/user/update/email"
         label="Email"
-      />
-      <UpdateButton
-        data={user.name!}
-        href="/user/update/username"
-        label="Username"
-      />
-      <UpdateButton href="/user/update/password" label="Password" />
-      <UpdateButton href="/user/update/delete" type="delete" label="Profile" />
+      /> */}
+      <Box>
+        <Text>{user.email}</Text>
+        <UpdateButton
+          data={user.name!}
+          href="/user/update/username"
+          label="Username"
+        />
+        <UpdateButton href="/user/update/password" label="Password" />
+        <UpdateButton
+          href="/user/update/delete"
+          type="delete"
+          label="Profile"
+        />
+      </Box>
     </Box>
   );
 };

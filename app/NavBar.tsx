@@ -10,6 +10,7 @@ const NavBar = async () => {
   const user = await prisma.user.findUnique({
     where: { email: session?.user?.email! },
   });
+  if (!user) return null;
 
   return (
     <nav className="border-b mb-3 px-3 py-3">

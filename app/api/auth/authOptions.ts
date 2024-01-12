@@ -34,4 +34,12 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+  callbacks: {
+    jwt({ token, trigger, session }) {
+      if (trigger === "update" && session.user.email) {
+        token.email = session.user.email;
+      }
+      return token;
+    },
+  },
 };

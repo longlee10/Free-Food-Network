@@ -1,12 +1,15 @@
 "use client";
 import { userUpdateSchema } from "@/app/validationSchema";
 import { User } from "@prisma/client";
-import { Button, TextField, Text } from "@radix-ui/themes";
+import { Box, Button, Callout, Text, TextField } from "@radix-ui/themes";
 import axios from "axios";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import ErrorMessage from "@/app/foods/_components/ErrorMessage";
+import { useState } from "react";
+import Spinner from "@/app/components/Spinner";
 
 interface Props {
   user: User;
@@ -16,44 +19,75 @@ interface Props {
 type UserUpdateFormData = z.infer<typeof userUpdateSchema>;
 
 const UserUpdateForm = ({ user, type }: Props) => {
-  const { handleSubmit, register } = useForm<UserUpdateFormData>();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<UserUpdateFormData>({
+    resolver: zodResolver(userUpdateSchema),
+  });
   const router = useRouter();
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   return (
-    <form
-      className="w-1/2 m-auto"
-      onSubmit={handleSubmit((data) => {
-        axios.post(`/api/user/update/`, data);
-        router.push("/user/profile");
-        router.refresh();
-      })}
-    >
-      <Text>Your Email:</Text>
-      <TextField.Root mb="3">
-        <TextField.Input defaultValue={user.email!} {...register("email")} />
-      </TextField.Root>
-
-      <Text>{`New ${type}:`}</Text>
-      {type === "Email" && (
-        <TextField.Root mb="3">
-          <TextField.Input {...register("newEmail")} />
-        </TextField.Root>
+    <Box>
+      {error && (
+        <Callout.Root className="w-1/2 m-auto" mb="3" color="red">
+          <Callout.Text>{error}</Callout.Text>
+        </Callout.Root>
       )}
+      <form
+        className="w-1/2 m-auto"
+        onSubmit={handleSubmit(async (data) => {
+          try {
+            setSubmitting(true);
+            await axios.post(`/api/user/update/`, {
+              email: user.email,
+              ...data,
+            });
+            router.push("/user/profile");
+            router.refresh();
+          } catch (err) {
+            setSubmitting(false);
+            setError("An unexpected error occurred.");
+          }
+        })}
+      >
+        <Text>{`New ${type}:`}</Text>
+        {type === "Email" && (
+          <div>
+            <ErrorMessage>{errors.newEmail?.message}</ErrorMessage>
+            <TextField.Root mb="3">
+              <TextField.Input {...register("newEmail")} />
+            </TextField.Root>
+          </div>
+        )}
 
-      {type === "Username" && (
-        <TextField.Root mb="3">
-          <TextField.Input {...register("newName")} />
-        </TextField.Root>
-      )}
+        {type === "Username" && (
+          <div>
+            <ErrorMessage>{errors.newName?.message}</ErrorMessage>
+            <TextField.Root mb="3">
+              <TextField.Input {...register("newName")} />
+            </TextField.Root>
+          </div>
+        )}
 
-      {type === "Password" && (
-        <TextField.Root mb="3">
-          <TextField.Input {...register("password")} />
-        </TextField.Root>
-      )}
+        {type === "Password" && (
+          <div>
+            <ErrorMessage>{errors.password?.message}</ErrorMessage>
+            <TextField.Root mb="3">
+              <TextField.Input {...register("password")} />
+            </TextField.Root>
+          </div>
+        )}
 
-      <Button>{`Change ${type}`}</Button>
-    </form>
+        <Button>
+          {submitting && <Spinner />}
+          {submitting ? "Updating..." : `Update ${type}`}
+        </Button>
+      </form>
+    </Box>
   );
 };
 
