@@ -11,6 +11,7 @@ const UserProfilePage = async () => {
   });
 
   if (!user) return null;
+
   return (
     <Box className="lg:w-1/3 md:w-1/2 m-auto mt-3">
       <Text className="uppercase font-bold sm:text-sm md:text-xl lg:text-2xl">
